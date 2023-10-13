@@ -1,0 +1,37 @@
+version: '3'
+services:
+    rabbitmq:
+        image:  "rabbitmq:3-management"
+        domainname: "rabbitmq.com"
+        ports:
+            - 1111:5672
+            - 2222:15672
+        environment:
+            RABBITMQ_DEFAULT_USER: guest
+            RABBITMQ_DEFAULT_PASS: guest
+        hostname: "rabbitmq"
+
+    flask-app:
+        build: ./my_app
+        ports:
+            - "4000:4000"
+        depends_on:
+            - rabbitmq
+#        environment:
+#            RABBITMQ_HOST: "localhost"
+#            RABBITMQ_PORT: 5672
+        links:
+            - rabbitmq
+        volumes:
+            - ./my_app:/app
+        working_dir: /app
+        command: [ "python", "ingestion_service_app_opt.py" ]
+
+    mongo:
+        image: mongo:7
+        ports:
+            - "27017:27017" # MongoDB default port
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: yanirkes
+            MONGO_INITDB_ROOT_PASSWORD: ylB0Jl4nHY35W053
+#172.19.0.3
