@@ -1,11 +1,12 @@
 # Web Frameworks
 Flask==3.0.0
 Flask-SQLAlchemy==3.0
+requests
 
 # Database Libraries
-SQLAlchemy==1.4.27
 PyMongo==3.12.0
 pika==1.2.0
+dnspython
 
 # AWS SDK for Python (Boto3)
 boto3==1.18.60

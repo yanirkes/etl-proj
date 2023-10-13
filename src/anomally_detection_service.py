@@ -2,7 +2,9 @@ from pymongo import MongoClient
 from src.anomally_detection_model import AnomalyDetector
 from pymongo.errors import ConnectionFailure
 import configparser
+import certifi
 
+ca = certifi.where()
 config = configparser.ConfigParser()
 config.read('utils/config.ini')
 
@@ -18,7 +20,7 @@ class MongoDbServer:
     def connect(self):
         try:
             db_url = config['Database']['db_url']
-            client = MongoClient(db_url)
+            client = MongoClient(db_url, tlsCAFile = ca)
             self.db = client[config['Database']['db']]
             self.collection = self.db[config['Database']['collection']]
 
